@@ -1,0 +1,14 @@
+C:\Users\hugoe\CSharp\Projetc#\ProjetCSGHK\obj\Debug\net7.0\ProjetCSGHK.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hugoe\CSharp\Projetc#\ProjetCSGHK\obj\Debug\net7.0\ProjetCSGHK.AssemblyInfoInputs.cache
+C:\Users\hugoe\CSharp\Projetc#\ProjetCSGHK\obj\Debug\net7.0\ProjetCSGHK.AssemblyInfo.cs
+C:\Users\hugoe\CSharp\Projetc#\ProjetCSGHK\obj\Debug\net7.0\ProjetCSGHK.csproj.CoreCompileInputs.cache
+C:\Users\hugoe\CSharp\Projetc#\ProjetCSGHK\bin\Debug\net7.0\ProjetCSGHK.exe
+C:\Users\hugoe\CSharp\Projetc#\ProjetCSGHK\bin\Debug\net7.0\ProjetCSGHK.deps.json
+C:\Users\hugoe\CSharp\Projetc#\ProjetCSGHK\bin\Debug\net7.0\ProjetCSGHK.runtimeconfig.json
+C:\Users\hugoe\CSharp\Projetc#\ProjetCSGHK\bin\Debug\net7.0\ProjetCSGHK.dll
+C:\Users\hugoe\CSharp\Projetc#\ProjetCSGHK\bin\Debug\net7.0\ProjetCSGHK.pdb
+C:\Users\hugoe\CSharp\Projetc#\ProjetCSGHK\obj\Debug\net7.0\ProjetCSGHK.dll
+C:\Users\hugoe\CSharp\Projetc#\ProjetCSGHK\obj\Debug\net7.0\refint\ProjetCSGHK.dll
+C:\Users\hugoe\CSharp\Projetc#\ProjetCSGHK\obj\Debug\net7.0\ProjetCSGHK.pdb
+C:\Users\hugoe\CSharp\Projetc#\ProjetCSGHK\obj\Debug\net7.0\ProjetCSGHK.genruntimeconfig.cache
+C:\Users\hugoe\CSharp\Projetc#\ProjetCSGHK\obj\Debug\net7.0\ref\ProjetCSGHK.dll
