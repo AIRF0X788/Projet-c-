@@ -7,7 +7,7 @@ public class Server
 {
     public static void Start()
     {
-        DatabaseManager.CreateDatabase();
+         DatabaseManager.CreateDatabase(); // Crée la base de données au démarrage du serveur
         Console.WriteLine("Database created successfully!");
         TcpListener listener = new TcpListener(IPAddress.Any, 8080);
         listener.Start();
