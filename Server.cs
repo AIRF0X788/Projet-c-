@@ -7,6 +7,8 @@ public class Server
 {
     public static void Start()
     {
+        DatabaseManager.CreateDatabase();
+        Console.WriteLine("Database created successfully!");
         TcpListener listener = new TcpListener(IPAddress.Any, 8080);
         listener.Start();
         Console.WriteLine("http://localhost:8080");
