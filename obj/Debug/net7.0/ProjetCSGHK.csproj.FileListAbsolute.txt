@@ -12,3 +12,18 @@ C:\Users\hugoe\CSharp\Projetc#\ProjetCSGHK\obj\Debug\net7.0\refint\ProjetCSGHK.d
 C:\Users\hugoe\CSharp\Projetc#\ProjetCSGHK\obj\Debug\net7.0\ProjetCSGHK.pdb
 C:\Users\hugoe\CSharp\Projetc#\ProjetCSGHK\obj\Debug\net7.0\ProjetCSGHK.genruntimeconfig.cache
 C:\Users\hugoe\CSharp\Projetc#\ProjetCSGHK\obj\Debug\net7.0\ref\ProjetCSGHK.dll
+D:\Projet c#\bin\Debug\net7.0\ProjetCSGHK.exe
+D:\Projet c#\bin\Debug\net7.0\ProjetCSGHK.deps.json
+D:\Projet c#\bin\Debug\net7.0\ProjetCSGHK.runtimeconfig.json
+D:\Projet c#\bin\Debug\net7.0\ProjetCSGHK.dll
+D:\Projet c#\bin\Debug\net7.0\ProjetCSGHK.pdb
+D:\Projet c#\obj\Debug\net7.0\ProjetCSGHK.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projet c#\obj\Debug\net7.0\ProjetCSGHK.AssemblyInfoInputs.cache
+D:\Projet c#\obj\Debug\net7.0\ProjetCSGHK.AssemblyInfo.cs
+D:\Projet c#\obj\Debug\net7.0\ProjetCSGHK.csproj.CoreCompileInputs.cache
+D:\Projet c#\obj\Debug\net7.0\ProjetCSGHK.sourcelink.json
+D:\Projet c#\obj\Debug\net7.0\ProjetCSGHK.dll
+D:\Projet c#\obj\Debug\net7.0\refint\ProjetCSGHK.dll
+D:\Projet c#\obj\Debug\net7.0\ProjetCSGHK.pdb
+D:\Projet c#\obj\Debug\net7.0\ProjetCSGHK.genruntimeconfig.cache
+D:\Projet c#\obj\Debug\net7.0\ref\ProjetCSGHK.dll
