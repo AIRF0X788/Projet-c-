@@ -15,10 +15,10 @@ public class DatabaseManager
             connection.Open();
 
             string createUserTableQuery = @"
-                CREATE TABLE IF NOT EXISTS user (
-                    id INTEGER PRIMARY KEY,
-                    username TEXT NOT NULL,
-                    password TEXT NOT NULL
+                CREATE TABLE IF NOT EXISTS data (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT NOT NULL,
+                    email TEXT NOT NULL
                 )";
 
             string createAddressTableQuery = @"
