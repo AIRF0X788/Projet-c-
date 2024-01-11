@@ -32,5 +32,7 @@ public class RequestHandler
         // Faire pour PUT, DELETE etc
 
         return "HTTP/1.1 404 Not Found\nContent-Type: text/plain\n\nNot Found";
+
+        
     }
 }

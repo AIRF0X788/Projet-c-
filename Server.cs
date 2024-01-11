@@ -2,12 +2,13 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Diagnostics;
 
 public class Server
 {
     public static void Start()
     {
-         DatabaseManager.CreateDatabase(); // Crée la base de données au démarrage du serveur
+        DatabaseManager.CreateDatabase();
         Console.WriteLine("Database created successfully!");
         TcpListener listener = new TcpListener(IPAddress.Any, 8080);
         listener.Start();
@@ -25,8 +26,41 @@ public class Server
                 string response = RequestHandler.ProcessRequest(request);
                 byte[] responseBytes = Encoding.UTF8.GetBytes(response);
                 stream.Write(responseBytes, 0, responseBytes.Length);
+
+                // Ouvrir la page HTML dans le navigateur
+                if (response.Contains("HTTP/1.1 200 OK\nContent-Type: text/plain\n\n[Racine]"))
+                {
+                    string cheminFichierHtml = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "index.html");
+
+                    try
+                    {
+                        Process.Start(new ProcessStartInfo
+                        {
+                            FileName = cheminFichierHtml,
+                            UseShellExecute = true
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Erreur : {ex.Message}");
+                    }
+
+                    OuvrirPageHtml(cheminFichierHtml);
+                }
             }
         }
     }
-}
 
+    private static void OuvrirPageHtml(string cheminFichierHtml)
+    {
+        try
+        {
+            // Utilisez Process.Start pour ouvrir le fichier HTML avec le navigateur par défaut
+            Process.Start(cheminFichierHtml);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erreur : {ex.Message}");
+        }
+    }
+}

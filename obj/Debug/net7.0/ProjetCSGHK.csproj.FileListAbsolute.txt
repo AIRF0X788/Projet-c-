@@ -55,3 +55,6 @@ D:\Projet c#\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Comm
 D:\Projet c#\bin\Debug\net7.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 D:\Projet c#\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
 D:\Projet c#\obj\Debug\net7.0\ProjetCSGHK.csproj.CopyComplete
+D:\Projet c#\bin\Debug\net7.0\System.Web.Razor.dll
+D:\Projet c#\bin\Debug\net7.0\RazorEngine.dll
+D:\Projet c#\bin\Debug\net7.0\Newtonsoft.Json.dll
