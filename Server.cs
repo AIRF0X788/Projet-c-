@@ -1,4 +1,3 @@
-using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -27,7 +26,6 @@ public class Server
                 byte[] responseBytes = Encoding.UTF8.GetBytes(response);
                 stream.Write(responseBytes, 0, responseBytes.Length);
 
-                // Ouvrir la page HTML dans le navigateur
                 if (response.Contains("HTTP/1.1 200 OK\nContent-Type: text/plain\n\n[Racine]"))
                 {
                     string cheminFichierHtml = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "index.html");
@@ -55,7 +53,6 @@ public class Server
     {
         try
         {
-            // Utilisez Process.Start pour ouvrir le fichier HTML avec le navigateur par défaut
             Process.Start(cheminFichierHtml);
         }
         catch (Exception ex)

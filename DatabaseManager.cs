@@ -1,6 +1,4 @@
-using System;
 using System.Data.SQLite;
-using System.IO;
 
 public class DatabaseManager
 {
@@ -100,7 +98,17 @@ public class DatabaseManager
         }
     }
 
+public static void AddPerson(string name, string email)
+    {
+        using (SQLiteConnection connection = new SQLiteConnection($"Data Source=db.db;Version=3;"))
+        {
+            connection.Open();
 
+            string insertPersonQuery = $"INSERT INTO data (name, email) VALUES ('{name}', '{email}')";
+
+            ExecuteQuery(connection, insertPersonQuery);
+        }
+    }
 
     private static void ExecuteQuery(SQLiteConnection connection, string query)
     {
