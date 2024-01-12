@@ -1,38 +1,42 @@
-using System;
-
+using System.Text.Json;
 public class RequestHandler
 {
-    public static string ProcessRequest(string request)
+    private DatabaseManager dbManager = new DatabaseManager();
+
+    public string HandleRequest(string httpMethod, string path, string requestBody)
     {
-        
-        var lines = request.Split(new string[] { "\r\n" }, StringSplitOptions.None);
-        var requestLine = lines.Length > 0 ? lines[0] : string.Empty;
-        var tokens = requestLine.Split(' ');
-        var method = tokens.Length > 0 ? tokens[0] : string.Empty;
-        var path = tokens.Length > 1 ? tokens[1] : string.Empty;
-
-        // Page racine
-        if (method == "GET" && path == "/")
+        switch (httpMethod)
         {
-           
-            return "HTTP/1.1 200 OK\nContent-Type: text/plain\n\n[Racine]";
+            case "GET":
+                return dbManager.GetProducts();
+            case "POST":
+                var newProduct = JsonSerializer.Deserialize<Product>(requestBody);
+                return dbManager.AddProduct(newProduct);
+            case "PUT":
+                var productToUpdate = JsonSerializer.Deserialize<Product>(requestBody);
+                int idToUpdate = ExtractIdFromPath(path);
+                productToUpdate.Id = idToUpdate;
+                return dbManager.UpdateProduct(productToUpdate);
+            case "DELETE":
+                int idToDelete = Convert.ToInt32(path);
+                return dbManager.DeleteProduct(idToDelete);
+            default:
+                return "HTTP/1.1 405 Method Not Allowed\nContent-Type: text/plain\n\nMethod Not Allowed";
         }
-
-        // Logique de traitement de la requête
-        if (method == "GET" && path == "/inventory")
-        {
-            // Pour récupérer l'inventaire
-            return "HTTP/1.1 200 OK\nContent-Type: text/plain\n\n[Inventaire ici]";
-        }
-        else if (method == "POST" && path == "/inventory")
-        {
-            //  Pour ajouter un nouvel élément à l'inventaire
-            return "HTTP/1.1 200 OK\nContent-Type: text/plain\n\n[Confirmation d'ajout]";
-        }
-        // Faire pour PUT, DELETE etc
-
-        return "HTTP/1.1 404 Not Found\nContent-Type: text/plain\n\nNot Found";
-
-        
     }
+
+    private int ExtractIdFromPath(string path)
+    {
+        var parts = path.Split('/');
+        if(parts.Length > 1 && int.TryParse(parts.Last(), out int id))
+        {
+            return id;
+        }
+        else
+        {
+            throw new ArgumentException("Le chemin d'accès ne contient pas un ID valide.");
+        }
+    }
+
 }
+
