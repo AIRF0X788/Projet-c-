@@ -1,8 +1,3 @@
-using System;
-using System.Net;
-using System.Text;
-using System.IO;
-
 public class RequestHandler
 {
     public static string ProcessRequest(string request)
