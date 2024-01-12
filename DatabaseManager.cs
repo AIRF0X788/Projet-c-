@@ -1,3 +1,5 @@
+using System.Data.SQLite;
+
 public class DatabaseManager
 {
     public static void CreateDatabase()
