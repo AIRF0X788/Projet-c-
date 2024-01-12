@@ -1,12 +1,32 @@
 using System.Data.SQLite;
 
+
+public class Person
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Email { get; set; }
+
+    public Person()
+    {
+
+        Name = string.Empty; 
+        Email = string.Empty; 
+    }
+
+}
+
 public class DatabaseManager
 {
     public static void CreateDatabase()
     {
         string databasePath = "db.db"; 
 
+        if (!File.Exists(databasePath))  // Vérifiez si la base de données existe déjà
+    {
+
         SQLiteConnection.CreateFile(databasePath);
+        }
 
         using (SQLiteConnection connection = new SQLiteConnection($"Data Source={databasePath};Version=3;"))
         {
@@ -117,5 +137,39 @@ public static void AddPerson(string name, string email)
             command.ExecuteNonQuery();
         }
     }
+
+    
+    public static List<Person> GetPeople()
+    {
+        using (SQLiteConnection connection = new SQLiteConnection($"Data Source=db.db;Version=3;"))
+        {
+            connection.Open();
+
+            string query = "SELECT * FROM data";
+
+            using (SQLiteCommand command = new SQLiteCommand(query, connection))
+            {
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    List<Person> people = new List<Person>();
+
+                    while (reader.Read())
+                    {
+                        int id = Convert.ToInt32(reader["id"]);
+                        string name = Convert.ToString(reader["name"]);
+                        string email = Convert.ToString(reader["email"]);
+
+
+
+                        people.Add(new Person { Id = id, Name = name, Email = email });
+
+                    }
+
+                    return people;
+                }
+            }
+        }
+    }
 }
+
 

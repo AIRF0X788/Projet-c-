@@ -1,3 +1,5 @@
+using System.Text;
+
 public class RequestHandler
 {
     public static string ProcessRequest(string request)
@@ -15,6 +17,7 @@ public class RequestHandler
 
         if (method == "GET" && path == "/inventory")
         {
+
             return "HTTP/1.1 200 OK\nContent-Type: text/plain\n\n[Inventaire ici]";
         }
         else if (method == "POST" && path == "/api/person")
@@ -28,7 +31,32 @@ public class RequestHandler
 
             return "HTTP/1.1 200 OK\nContent-Type: text/plain\n\n[Confirmation d'ajout]";
         }
+        else if (method == "GET" && path == "/people")
+        {
+            var people = DatabaseManager.GetPeople();
+            var html = GenerateHtmlTable(people);
+
+            return $"HTTP/1.1 200 OK\nContent-Type: text/html\n\n{html}";
+        }
+
+        
 
         return "HTTP/1.1 404 Not Found\nContent-Type: text/plain\n\nNot Found";
+    }
+
+    private static string GenerateHtmlTable(List<Person> people)
+    {
+        StringBuilder html = new StringBuilder();
+        html.Append("<table border='1'>");
+        html.Append("<tr><th>ID</th><th>Name</th><th>Email</th></tr>");
+
+        foreach (var person in people)
+        {
+            html.Append($"<tr><td>{person.Id}</td><td>{person.Name}</td><td>{person.Email}</td></tr>");
+        }
+
+        html.Append("</table>");
+
+        return html.ToString();
     }
 }
