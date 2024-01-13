@@ -1,5 +1,6 @@
 using System.Data.SQLite;
 
+
 public class Person
 {
     public int Id { get; set; }
@@ -60,10 +61,11 @@ public class DatabaseManager
                     description TEXT,
                     price TEXT
                 )";
-
+      
 
             ExecuteQuery(connection, createUserTableQuery);
             ExecuteQuery(connection, createProductTableQuery);
+
         }
     }
 
@@ -157,5 +159,3 @@ public static void AddPerson(string name, string email)
     }
 
 }
-
-
