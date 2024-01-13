@@ -32,11 +32,11 @@ public class DatabaseManager
 {
     private static string connectionString = "Server=localhost;Database=csharp;User=root;Password=;";
 
-    public static void CreateDatabase()
+    public static async Task CreateDatabaseAsync()
     {
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
-            connection.Open();
+            await connection.OpenAsync();
 
             string createUserTableQuery = @"
                 CREATE TABLE IF NOT EXISTS data (
@@ -53,22 +53,22 @@ public class DatabaseManager
                     price DECIMAL(10, 2)
                 )";
 
-            ExecuteQuery(connection, createUserTableQuery);
-            ExecuteQuery(connection, createProductTableQuery);
+             await ExecuteQueryAsync(connection, createUserTableQuery);
+             await ExecuteQueryAsync(connection, createProductTableQuery);
 
         }
     }
 
-    public static void AddPerson(string name, string email)
+    public static async Task AddPersonAsync(string name, string email)
     {
         using (MySqlConnection connection = new MySqlConnection(connectionString))
-        {
-            connection.Open();
+    {
+        await connection.OpenAsync();
 
-            string insertPersonQuery = $"INSERT INTO data (name, email) VALUES ('{name}', '{email}')";
+        string insertPersonQuery = $"INSERT INTO data (name, email) VALUES ('{name}', '{email}')";
 
-            ExecuteQuery(connection, insertPersonQuery);
-        }
+        await ExecuteQueryAsync(connection, insertPersonQuery);
+    }
     }
 
     public static List<Person> GetPeople()
@@ -100,16 +100,17 @@ public class DatabaseManager
         }
     }
 
-    public static void AddProduct(string name, string description, string price)
+public static async Task AddProductAsync(string name, string description, string price)
+{
+    using (MySqlConnection connection = new MySqlConnection(connectionString))
     {
-        using (MySqlConnection connection = new MySqlConnection(connectionString))
-        {
-            connection.Open();
-            string insertProductQuery = $"INSERT INTO product (name, description, price) VALUES ('{name}', '{description}', '{price}')";
+        await connection.OpenAsync();
+        string insertProductQuery = $"INSERT INTO product (name, description, price) VALUES ('{name}', '{description}', '{price}')";
 
-            ExecuteQuery(connection, insertProductQuery);
-        }
+        await ExecuteQueryAsync(connection, insertProductQuery);
     }
+}
+
 
     public static List<Product> GetProducts()
     {
@@ -141,35 +142,36 @@ public class DatabaseManager
         return products;
     }
 
-    public static void UpdatePerson(int personId, string newName, string newEmail)
+public static async Task UpdatePersonAsync(int personId, string newName, string newEmail)
 {
     using (MySqlConnection connection = new MySqlConnection(connectionString))
     {
-        connection.Open();
+        await connection.OpenAsync();
 
         string updatePersonQuery = $"UPDATE data SET name = '{newName}', email = '{newEmail}' WHERE id = {personId}";
 
-        ExecuteQuery(connection, updatePersonQuery);
+        await ExecuteQueryAsync(connection, updatePersonQuery);
     }
 }
 
-public static void DeletePerson(int personId)
+public static async Task DeletePersonAsync(int personId)
 {
     using (MySqlConnection connection = new MySqlConnection(connectionString))
     {
-        connection.Open();
+        await connection.OpenAsync();
 
         string deletePersonQuery = $"DELETE FROM data WHERE id = {personId}";
 
-        ExecuteQuery(connection, deletePersonQuery);
+        await ExecuteQueryAsync(connection, deletePersonQuery);
     }
 }
 
-    private static void ExecuteQuery(MySqlConnection connection, string query)
+
+    private static async Task ExecuteQueryAsync(MySqlConnection connection, string query)
+{
+    using (MySqlCommand command = new MySqlCommand(query, connection))
     {
-        using (MySqlCommand command = new MySqlCommand(query, connection))
-        {
-            command.ExecuteNonQuery();
-        }
+        await command.ExecuteNonQueryAsync();
     }
+}
 }
