@@ -15,6 +15,16 @@ public class RequestHandler
             return "HTTP/1.1 200 OK\nContent-Type: text/html\n\n" + File.ReadAllText("index.html");
         }
 
+        if (method == "GET" && path == "/user")
+        {
+            return "HTTP/1.1 200 OK\nContent-Type: text/html\n\n" + File.ReadAllText("user.html");
+        }
+
+        if (method == "GET" && path == "/product")
+        {
+            return "HTTP/1.1 200 OK\nContent-Type: text/html\n\n" + File.ReadAllText("product.html");
+        }
+
         else if (method == "POST" && path == "/api/inventory")
         {
             var body = lines[lines.Length - 1]; 
