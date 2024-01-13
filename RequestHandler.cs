@@ -15,10 +15,26 @@ public class RequestHandler
             return "HTTP/1.1 200 OK\nContent-Type: text/html\n\n" + File.ReadAllText("index.html");
         }
 
+        else if (method == "POST" && path == "/api/inventory")
+        {
+            var body = lines[lines.Length - 1]; 
+            var product = body.Split('&');
+            var name = product[0].Split('=')[1];
+            var description = product[1].Split('=')[1];
+            var price = product[2].Split('=')[1];
+
+
+            DatabaseManager.AddProduct(name, description, price);
+
+            return "HTTP/1.1 200 OK\nContent-Type: text/plain\n\n[Confirmation d'ajout]";
+        }
+
         if (method == "GET" && path == "/inventory")
         {
+            var products = DatabaseManager.GetProducts();
+            var html = GenerateHtmlTable2(products);
 
-            return "HTTP/1.1 200 OK\nContent-Type: text/plain\n\n[Inventaire ici]";
+            return $"HTTP/1.1 200 OK\nContent-Type: text/html\n\n{html}";
         }
         else if (method == "POST" && path == "/api/person")
         {
@@ -53,6 +69,22 @@ public class RequestHandler
         foreach (var person in people)
         {
             html.Append($"<tr><td>{person.Id}</td><td>{person.Name}</td><td>{person.Email}</td></tr>");
+        }
+
+        html.Append("</table>");
+
+        return html.ToString();
+    }
+
+    private static string GenerateHtmlTable2(List<Product> products)
+    {
+        StringBuilder html = new StringBuilder();
+        html.Append("<table border='1'>");
+        html.Append("<tr><th>ID</th><th>Name</th><th>Description</th><th>Price</th></tr>");
+
+        foreach (var product in products)
+        {
+            html.Append($"<tr><td>{product.Id}</td><td>{product.Name}</td><td>{product.Description}</td><td>{product.Price}</td></tr>");
         }
 
         html.Append("</table>");

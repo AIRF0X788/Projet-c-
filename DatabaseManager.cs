@@ -20,14 +20,14 @@ public class Product
     public int Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
-    public int Price { get; set; }
+    public string Price { get; set; }
     
 
     public Product()
     {
         Name = string.Empty; 
         Description = string.Empty; 
-        Price = 0;
+        Price = string.Empty; 
     }
 }
 
@@ -68,7 +68,7 @@ public class DatabaseManager
                     id INTEGER PRIMARY KEY,
                     name TEXT,
                     description TEXT,
-                    price REAL
+                    price TEXT
                 )";
 
             string createCartTableQuery = @"
@@ -186,14 +186,14 @@ public static void AddPerson(string name, string email)
         }
     }
 
-    public static void AddProduct(string name, string description, int price)
+    public static void AddProduct(string name, string description, string price)
     {
         using (var connection = new SQLiteConnection("Data Source=db.db;Version=3;"))
         {
             connection.Open();
                 var command = new SQLiteCommand(connection)
                 {
-                    CommandText = $"INSERT INTO data (name, email) VALUES ('{name}', '{description}', '{price}')"
+                    CommandText = $"INSERT INTO product (name, description, price) VALUES ('{name}', '{description}', '{price}')"
                 };
             command.ExecuteNonQuery();
         }
@@ -214,13 +214,14 @@ public static void AddPerson(string name, string email)
                         Id = Convert.ToInt32(reader["id"]),
                         Name = reader["name"].ToString(),
                         Description = reader["description"].ToString(),
-                        Price = Convert.ToInt32(reader["price"])
+                        Price = reader["price"].ToString(),
                     });
                 }
             }
         }
         return products;
     }
+
 }
 
 
