@@ -27,7 +27,7 @@ public class RequestHandler
 
         else if (method == "POST" && path == "/api/inventory")
         {
-            var body = lines[lines.Length - 1]; 
+            var body = lines[lines.Length - 1];
             var product = body.Split('&');
             var name = product[0].Split('=')[1];
             var description = product[1].Split('=')[1];
@@ -39,6 +39,28 @@ public class RequestHandler
             return "HTTP/1.1 200 OK\nContent-Type: text/plain\n\n[Confirmation d'ajout]";
         }
 
+
+        else if (method == "PUT" && path.StartsWith("/api/person/"))
+        {
+            int personId;
+            if (int.TryParse(path.Split('/').Last(), out personId))
+            {
+                var body = lines[lines.Length - 1];
+                var data = body.Split('&');
+                var name = data[0].Split('=')[1];
+                var email = data[1].Split('=')[1];
+
+                DatabaseManager.UpdatePerson(personId, name, email);
+
+                return "HTTP/1.1 200 OK\nContent-Type: text/plain\n\n[Confirmation de mise à jour]";
+            }
+            else
+            {
+                return "HTTP/1.1 400 Bad Request\nContent-Type: text/plain\n\n[Erreur de requête]";
+            }
+        }
+
+
         if (method == "GET" && path == "/inventory")
         {
             var products = DatabaseManager.GetProducts();
@@ -48,7 +70,7 @@ public class RequestHandler
         }
         else if (method == "POST" && path == "/api/person")
         {
-            var body = lines[lines.Length - 1]; 
+            var body = lines[lines.Length - 1];
             var data = body.Split('&');
             var name = data[0].Split('=')[1];
             var email = data[1].Split('=')[1];
@@ -65,8 +87,6 @@ public class RequestHandler
             return $"HTTP/1.1 200 OK\nContent-Type: text/html\n\n{html}";
         }
 
-        
-
         return "HTTP/1.1 404 Not Found\nContent-Type: text/plain\n\nNot Found";
     }
 
@@ -78,7 +98,7 @@ public class RequestHandler
 
         foreach (var person in people)
         {
-            html.Append($"<tr><td>{person.Id}</td><td>{person.Name}</td><td>{person.Email}</td><td><button onclick='editPerson({person.Id})'>Edit</button></td></tr>");
+            html.Append($"<tr><td>{person.Id}</td><td>{person.Name}</td><td>{person.Email}</td></tr>");
         }
 
         html.Append("</table>");

@@ -42,8 +42,54 @@
             const result = await response.json();
             console.log(result);
         }
+
+        
     </script>
     
     <a href="http://localhost:8080/people">Afficher la table des personnes</a>
+    
+    <h1>Modifier une personne</h1>
+    
+    <form id="editPersonForm">
+        <label for="editId">ID de la personne à modifier:</label>
+        <input type="number" id="editId" name="editId" required>
+        <br>
+        <label for="editName">Nouveau nom:</label>
+        <input type="text" id="editName" name="editName">
+        <br>
+        <label for="editEmail">Nouvel email:</label>
+        <input type="email" id="editEmail" name="editEmail">
+        <br>
+        <button type="button" onclick="editPerson()">Modifier</button>
+    </form>
+
+    <script>
+        document.getElementById('editPersonForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            editPerson();
+        });
+
+        async function editPerson() {
+            const id = document.getElementById('editId').value;
+            const newName = document.getElementById('editName').value;
+            const newEmail = document.getElementById('editEmail').value;
+
+            const data = new URLSearchParams();
+            data.append('name', newName);
+            data.append('email', newEmail);
+
+            const response = await fetch(`http://localhost:8080/api/person/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: data,
+            });
+
+            const result = await response.json();
+            console.log(result);
+        }
+    </script>
+
 </body>
 </html>
