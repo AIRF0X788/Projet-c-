@@ -22,7 +22,7 @@ public class DatabaseManager
     {
         string databasePath = "db.db"; 
 
-        if (!File.Exists(databasePath))  // Vérifiez si la base de données existe déjà
+        if (!File.Exists(databasePath))
     {
 
         SQLiteConnection.CreateFile(databasePath);
