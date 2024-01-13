@@ -91,5 +91,24 @@
         }
     </script>
 
+<label for="deleteId">ID de la personne à supprimer:</label>
+<input type="number" id="deleteId" name="deleteId" required>
+<br>
+<button type="button" onclick="deletePerson()">Supprimer</button>
+
+<script>
+    async function deletePerson() {
+        const idToDelete = document.getElementById('deleteId').value;
+
+        const response = await fetch(`http://localhost:8080/api/person/${idToDelete}`, {
+            method: 'DELETE',
+        });
+
+        const result = await response.json();
+        console.log(result);
+    }
+</script>
+
+
 </body>
 </html>

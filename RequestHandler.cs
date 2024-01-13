@@ -60,6 +60,22 @@ public class RequestHandler
             }
         }
 
+        else if (method == "DELETE" && path.StartsWith("/api/person/"))
+        {
+            int personId;
+            if (int.TryParse(path.Split('/').Last(), out personId))
+            {
+                DatabaseManager.DeletePerson(personId);
+
+                return "HTTP/1.1 200 OK\nContent-Type: text/plain\n\n[Confirmation de suppression]";
+            }
+            else
+            {
+                return "HTTP/1.1 400 Bad Request\nContent-Type: text/plain\n\n[Erreur de requête]";
+            }
+        }
+
+
 
         if (method == "GET" && path == "/inventory")
         {

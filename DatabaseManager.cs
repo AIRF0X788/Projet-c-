@@ -153,6 +153,17 @@ public class DatabaseManager
     }
 }
 
+public static void DeletePerson(int personId)
+{
+    using (MySqlConnection connection = new MySqlConnection(connectionString))
+    {
+        connection.Open();
+
+        string deletePersonQuery = $"DELETE FROM data WHERE id = {personId}";
+
+        ExecuteQuery(connection, deletePersonQuery);
+    }
+}
 
     private static void ExecuteQuery(MySqlConnection connection, string query)
     {
