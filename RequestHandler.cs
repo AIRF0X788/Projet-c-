@@ -78,7 +78,7 @@ public class RequestHandler
 
         foreach (var person in people)
         {
-            html.Append($"<tr><td>{person.Id}</td><td>{person.Name}</td><td>{person.Email}</td></tr>");
+            html.Append($"<tr><td>{person.Id}</td><td>{person.Name}</td><td>{person.Email}</td><td><button onclick='editPerson({person.Id})'>Edit</button><button onclick='editPerson({person.Id})'>Delete</button></td></tr>");
         }
 
         html.Append("</table>");
