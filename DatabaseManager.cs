@@ -1,4 +1,4 @@
-using System.Data.SQLite;
+using MySql.Data.MySqlClient;
 
 public class Person
 {
@@ -8,10 +8,9 @@ public class Person
 
     public Person()
     {
-        Name = string.Empty; 
-        Email = string.Empty; 
+        Name = string.Empty;
+        Email = string.Empty;
     }
-
 }
 
 public class Product
@@ -20,56 +19,48 @@ public class Product
     public string Name { get; set; }
     public string Description { get; set; }
     public string Price { get; set; }
-    
 
     public Product()
     {
-        Name = string.Empty; 
-        Description = string.Empty; 
-        Price = string.Empty; 
+        Name = string.Empty;
+        Description = string.Empty;
+        Price = string.Empty;
     }
 }
 
 public class DatabaseManager
 {
+    private static string connectionString = "Server=localhost;Database=csharp;User=root;Password=;";
+
     public static void CreateDatabase()
     {
-        string databasePath = "db.db"; 
-
-        if (!File.Exists(databasePath))
-    {
-
-        SQLiteConnection.CreateFile(databasePath);
-        }
-
-        using (SQLiteConnection connection = new SQLiteConnection($"Data Source={databasePath};Version=3;"))
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
             connection.Open();
 
             string createUserTableQuery = @"
                 CREATE TABLE IF NOT EXISTS data (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    name TEXT NOT NULL,
-                    email TEXT NOT NULL
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    name VARCHAR(255) NOT NULL,
+                    email VARCHAR(255) NOT NULL
                 )";
 
             string createProductTableQuery = @"
                 CREATE TABLE IF NOT EXISTS product (
-                    id INTEGER PRIMARY KEY,
-                    name TEXT,
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    name VARCHAR(255),
                     description TEXT,
-                    price TEXT
+                    price DECIMAL(10, 2)
                 )";
-
 
             ExecuteQuery(connection, createUserTableQuery);
             ExecuteQuery(connection, createProductTableQuery);
         }
     }
 
-public static void AddPerson(string name, string email)
+    public static void AddPerson(string name, string email)
     {
-        using (SQLiteConnection connection = new SQLiteConnection($"Data Source=db.db;Version=3;"))
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
             connection.Open();
 
@@ -79,26 +70,17 @@ public static void AddPerson(string name, string email)
         }
     }
 
-    private static void ExecuteQuery(SQLiteConnection connection, string query)
-    {
-        using (SQLiteCommand command = new SQLiteCommand(query, connection))
-        {
-            command.ExecuteNonQuery();
-        }
-    }
-
-    
     public static List<Person> GetPeople()
     {
-        using (SQLiteConnection connection = new SQLiteConnection($"Data Source=db.db;Version=3;"))
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
             connection.Open();
 
             string query = "SELECT * FROM data";
 
-            using (SQLiteCommand command = new SQLiteCommand(query, connection))
+            using (MySqlCommand command = new MySqlCommand(query, connection))
             {
-                using (SQLiteDataReader reader = command.ExecuteReader())
+                using (MySqlDataReader reader = command.ExecuteReader())
                 {
                     List<Person> people = new List<Person>();
 
@@ -108,10 +90,7 @@ public static void AddPerson(string name, string email)
                         string name = Convert.ToString(reader["name"]);
                         string email = Convert.ToString(reader["email"]);
 
-
-
                         people.Add(new Person { Id = id, Name = name, Email = email });
-
                     }
 
                     return people;
@@ -122,40 +101,50 @@ public static void AddPerson(string name, string email)
 
     public static void AddProduct(string name, string description, string price)
     {
-        using (var connection = new SQLiteConnection("Data Source=db.db;Version=3;"))
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
             connection.Open();
-                var command = new SQLiteCommand(connection)
-                {
-                    CommandText = $"INSERT INTO product (name, description, price) VALUES ('{name}', '{description}', '{price}')"
-                };
-            command.ExecuteNonQuery();
+            string insertProductQuery = $"INSERT INTO product (name, description, price) VALUES ('{name}', '{description}', '{price}')";
+
+            ExecuteQuery(connection, insertProductQuery);
         }
     }
+
     public static List<Product> GetProducts()
     {
         List<Product> products = new List<Product>();
-        using (var connection = new SQLiteConnection("Data Source=db.db;Version=3;"))
+
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
             connection.Open();
-            var command = new SQLiteCommand("SELECT * FROM product", connection);
-            using (var reader = command.ExecuteReader())
+            string query = "SELECT * FROM product";
+
+            using (MySqlCommand command = new MySqlCommand(query, connection))
             {
-                while (reader.Read())
+                using (MySqlDataReader reader = command.ExecuteReader())
                 {
-                    products.Add(new Product
+                    while (reader.Read())
                     {
-                        Id = Convert.ToInt32(reader["id"]),
-                        Name = reader["name"].ToString(),
-                        Description = reader["description"].ToString(),
-                        Price = reader["price"].ToString(),
-                    });
+                        products.Add(new Product
+                        {
+                            Id = Convert.ToInt32(reader["id"]),
+                            Name = reader["name"].ToString(),
+                            Description = reader["description"].ToString(),
+                            Price = reader["price"].ToString(),
+                        });
+                    }
                 }
             }
         }
+
         return products;
     }
 
+    private static void ExecuteQuery(MySqlConnection connection, string query)
+    {
+        using (MySqlCommand command = new MySqlCommand(query, connection))
+        {
+            command.ExecuteNonQuery();
+        }
+    }
 }
-
-

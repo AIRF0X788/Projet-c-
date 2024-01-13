@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projet c#\\ProjetCSGHK.csproj": {}
+    "C:\\Users\\Utilisateur\\Documents\\Projet-c-\\ProjetCSGHK.csproj": {}
   },
   "projects": {
-    "D:\\Projet c#\\ProjetCSGHK.csproj": {
+    "C:\\Users\\Utilisateur\\Documents\\Projet-c-\\ProjetCSGHK.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projet c#\\ProjetCSGHK.csproj",
+        "projectUniqueName": "C:\\Users\\Utilisateur\\Documents\\Projet-c-\\ProjetCSGHK.csproj",
         "projectName": "ProjetCSGHK",
-        "projectPath": "D:\\Projet c#\\ProjetCSGHK.csproj",
-        "packagesPath": "C:\\Users\\gui2l\\.nuget\\packages\\",
-        "outputPath": "D:\\Projet c#\\obj\\",
+        "projectPath": "C:\\Users\\Utilisateur\\Documents\\Projet-c-\\ProjetCSGHK.csproj",
+        "packagesPath": "C:\\Users\\Utilisateur\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Utilisateur\\Documents\\Projet-c-\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\gui2l\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Utilisateur\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -38,6 +38,10 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "MySql.Data": {
+              "target": "Package",
+              "version": "[8.2.0, )"
+            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.3, )"
