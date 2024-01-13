@@ -27,7 +27,7 @@ public class RequestHandler
 
         else if (method == "POST" && path == "/api/inventory")
         {
-            var body = lines[lines.Length - 1]; 
+            var body = lines[lines.Length - 1];
             var product = body.Split('&');
             var name = product[0].Split('=')[1];
             var description = product[1].Split('=')[1];
@@ -48,7 +48,7 @@ public class RequestHandler
         }
         else if (method == "POST" && path == "/api/person")
         {
-            var body = lines[lines.Length - 1]; 
+            var body = lines[lines.Length - 1];
             var data = body.Split('&');
             var name = data[0].Split('=')[1];
             var email = data[1].Split('=')[1];
@@ -64,9 +64,6 @@ public class RequestHandler
 
             return $"HTTP/1.1 200 OK\nContent-Type: text/html\n\n{html}";
         }
-
-        
-
         return "HTTP/1.1 404 Not Found\nContent-Type: text/plain\n\nNot Found";
     }
 

@@ -1,6 +1,5 @@
 using System.Data.SQLite;
 
-
 public class Person
 {
     public int Id { get; set; }
@@ -54,15 +53,6 @@ public class DatabaseManager
                     email TEXT NOT NULL
                 )";
 
-            string createAddressTableQuery = @"
-                CREATE TABLE IF NOT EXISTS address (
-                    id INTEGER PRIMARY KEY,
-                    user_id INTEGER,
-                    street TEXT,
-                    city TEXT,
-                    postal_code TEXT
-                )";
-
             string createProductTableQuery = @"
                 CREATE TABLE IF NOT EXISTS product (
                     id INTEGER PRIMARY KEY,
@@ -71,65 +61,9 @@ public class DatabaseManager
                     price TEXT
                 )";
 
-            string createCartTableQuery = @"
-                CREATE TABLE IF NOT EXISTS cart (
-                    id INTEGER PRIMARY KEY,
-                    user_id INTEGER,
-                    product_id INTEGER,
-                    quantity INTEGER
-                )";
-
-            string createCommandTableQuery = @"
-                CREATE TABLE IF NOT EXISTS command (
-                    id INTEGER PRIMARY KEY,
-                    user_id INTEGER,
-                    product_id INTEGER,
-                    quantity INTEGER,
-                    status TEXT
-                )";
-
-            string createInvoicesTableQuery = @"
-                CREATE TABLE IF NOT EXISTS invoices (
-                    id INTEGER PRIMARY KEY,
-                    user_id INTEGER,
-                    command_id INTEGER,
-                    total_amount REAL
-                )";
-
-            string createPhotoTableQuery = @"
-                CREATE TABLE IF NOT EXISTS photo (
-                    id INTEGER PRIMARY KEY,
-                    user_id INTEGER,
-                    product_id INTEGER,
-                    file_path TEXT
-                )";
-
-            string createRateTableQuery = @"
-                CREATE TABLE IF NOT EXISTS rate (
-                    id INTEGER PRIMARY KEY,
-                    user_id INTEGER,
-                    product_id INTEGER,
-                    rating INTEGER
-                )";
-
-            string createPaymentTableQuery = @"
-                CREATE TABLE IF NOT EXISTS payment (
-                    id INTEGER PRIMARY KEY,
-                    user_id INTEGER,
-                    method_name TEXT,
-                    iban TEXT,
-                    card_number TEXT
-                )";
 
             ExecuteQuery(connection, createUserTableQuery);
-            ExecuteQuery(connection, createAddressTableQuery);
             ExecuteQuery(connection, createProductTableQuery);
-            ExecuteQuery(connection, createCartTableQuery);
-            ExecuteQuery(connection, createCommandTableQuery);
-            ExecuteQuery(connection, createInvoicesTableQuery);
-            ExecuteQuery(connection, createPhotoTableQuery);
-            ExecuteQuery(connection, createRateTableQuery);
-            ExecuteQuery(connection, createPaymentTableQuery);
         }
     }
 
