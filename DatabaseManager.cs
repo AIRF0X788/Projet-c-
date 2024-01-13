@@ -9,11 +9,26 @@ public class Person
 
     public Person()
     {
-
         Name = string.Empty; 
         Email = string.Empty; 
     }
 
+}
+
+public class Product
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public int Price { get; set; }
+    
+
+    public Product()
+    {
+        Name = string.Empty; 
+        Description = string.Empty; 
+        Price = 0;
+    }
 }
 
 public class DatabaseManager
@@ -169,6 +184,42 @@ public static void AddPerson(string name, string email)
                 }
             }
         }
+    }
+
+    public static void AddProduct(string name, string description, int price)
+    {
+        using (var connection = new SQLiteConnection("Data Source=db.db;Version=3;"))
+        {
+            connection.Open();
+                var command = new SQLiteCommand(connection)
+                {
+                    CommandText = $"INSERT INTO data (name, email) VALUES ('{name}', '{description}', '{price}')"
+                };
+            command.ExecuteNonQuery();
+        }
+    }
+    public static List<Product> GetProducts()
+    {
+        List<Product> products = new List<Product>();
+        using (var connection = new SQLiteConnection("Data Source=db.db;Version=3;"))
+        {
+            connection.Open();
+            var command = new SQLiteCommand("SELECT * FROM product", connection);
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    products.Add(new Product
+                    {
+                        Id = Convert.ToInt32(reader["id"]),
+                        Name = reader["name"].ToString(),
+                        Description = reader["description"].ToString(),
+                        Price = Convert.ToInt32(reader["price"])
+                    });
+                }
+            }
+        }
+        return products;
     }
 }
 
