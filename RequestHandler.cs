@@ -12,18 +12,17 @@ public class RequestHandler
 
         if (method == "GET" && path == "/")
         {
-            return "HTTP/1.1 200 OK\nContent-Type: text/html\n\n" + File.ReadAllText("bin/Debug/net7.0/index.html");
+            return "HTTP/1.1 200 OK\nContent-Type: text/html\n\n" + File.ReadAllText("index.html");
         }
 
         if (method == "GET" && path == "/user")
         {
-            return "HTTP/1.1 200 OK\nContent-Type: text/html\n\n" + File.ReadAllText("bin/Debug/net7.0/user.html");
+            return "HTTP/1.1 200 OK\nContent-Type: text/html\n\n" + File.ReadAllText("user.html");
         }
         
-
         if (method == "GET" && path == "/product")
         {
-            return "HTTP/1.1 200 OK\nContent-Type: text/html\n\n" + File.ReadAllText("bin/Debug/net7.0/product.html");
+            return "HTTP/1.1 200 OK\nContent-Type: text/html\n\n" + File.ReadAllText("product.html");
         }
 
         else if (method == "POST" && path == "/api/inventory")

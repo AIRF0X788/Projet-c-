@@ -190,3 +190,4 @@ C:\Users\hugoe\CSharp\Projetc#\Projet-c-\obj\Debug\net7.0\ProjetCSGHK.pdb
 C:\Users\hugoe\CSharp\Projetc#\Projet-c-\obj\Debug\net7.0\ProjetCSGHK.genruntimeconfig.cache
 C:\Users\hugoe\CSharp\Projetc#\Projet-c-\obj\Debug\net7.0\ref\ProjetCSGHK.dll
 D:\Projet c#\bin\Debug\net7.0\BCrypt.Net-Next.dll
+D:\Projet c#\bin\Debug\net7.0\DevOne.Security.Cryptography.BCrypt.dll
