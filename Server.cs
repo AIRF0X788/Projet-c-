@@ -43,13 +43,13 @@ public class Server
                         Console.WriteLine($"Erreur : {ex.Message}");
                     }
 
-                    await OuvrirPageHtmlAsync(cheminFichierHtml);
+                    OuvrirPageHtml(cheminFichierHtml);
                 }
             }
         }
     }
 
-   private static async Task OuvrirPageHtmlAsync(string cheminFichierHtml)
+ private static void OuvrirPageHtml(string cheminFichierHtml)
 {
     try
     {
@@ -60,5 +60,6 @@ public class Server
         Console.WriteLine($"Erreur : {ex.Message}");
     }
 }
+
 
 }
