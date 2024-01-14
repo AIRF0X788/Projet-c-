@@ -39,7 +39,6 @@ public class RequestHandler
             return "HTTP/1.1 200 OK\nContent-Type: text/plain\n\n[Confirmation d'ajout]";
         }
 
-
         else if (method == "PUT" && path.StartsWith("/api/person/"))
         {
             int personId;
@@ -118,6 +117,7 @@ public class RequestHandler
 
             return $"HTTP/1.1 200 OK\nContent-Type: text/html\n\n{html}";
         }
+
         else if (method == "POST" && path == "/api/person")
         {
             var body = lines[lines.Length - 1];
@@ -129,6 +129,7 @@ public class RequestHandler
 
             return "HTTP/1.1 200 OK\nContent-Type: text/plain\n\n[Confirmation d'ajout]";
         }
+        
         else if (method == "GET" && path == "/people")
         {
             var people = DatabaseManager.GetPeople();

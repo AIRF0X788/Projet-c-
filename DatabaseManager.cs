@@ -111,7 +111,6 @@ public static async Task AddProductAsync(string name, string description, string
     }
 }
 
-
     public static List<Product> GetProducts()
     {
         List<Product> products = new List<Product>();
@@ -189,9 +188,6 @@ public static async Task DeleteProductAsync(int productId)
         await ExecuteQueryAsync(connection, deleteProductQuery);
     }
 }
-
-
-
 
     private static async Task ExecuteQueryAsync(MySqlConnection connection, string query)
 {
