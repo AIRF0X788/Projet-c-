@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "8SU4KdQOQsorQsD3a6qZ6nlVfXykr0mn/Hm9faihv+aNMBWUboTbK51pIZY+C+uPbpxiAr9vWbsE/xSYJQCFiA==",
+  "dgSpecHash": "4QRwBoPLMhY2B7ZtBh6WC11EgTy3Sw1YImfYb17eDugGlBtxr5oY0etHk2pR+HZ7SAoOKyAivZ7JktmaEbf41A==",
   "success": true,
   "projectFilePath": "C:\\Users\\hugoe\\CSharp\\Projetc#\\Projet-c-\\ProjetCSGHK.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\hugoe\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\hugoe\\.nuget\\packages\\bouncycastle.cryptography\\2.2.1\\bouncycastle.cryptography.2.2.1.nupkg.sha512",
     "C:\\Users\\hugoe\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\hugoe\\.nuget\\packages\\google.protobuf\\3.21.9\\google.protobuf.3.21.9.nupkg.sha512",

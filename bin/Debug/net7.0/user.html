@@ -14,6 +14,9 @@
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>
         <br>
+        <label for="password">Mot de passe:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
         <button type="submit">Ajouter</button>
     </form>
 
@@ -26,10 +29,12 @@
         async function addPerson() {
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
+            const passwordhash = document.getElementById('password').value;
 
             const data = new URLSearchParams();
             data.append('name', name);
             data.append('email', email);
+            data.append('passwordhash', passwordhash);
 
             const response = await fetch('http://localhost:8080/api/person', {
                 method: 'POST',
@@ -60,6 +65,9 @@
         <label for="editEmail">Nouvel email:</label>
         <input type="email" id="editEmail" name="editEmail">
         <br>
+        <label for="password">Mot de passe:</label>
+        <input type="password" id="editPassword" name="editPassword" required>
+        <br>
         <button type="button" onclick="editPerson()">Modifier</button>
     </form>
 
@@ -73,10 +81,12 @@
             const id = document.getElementById('editId').value;
             const newName = document.getElementById('editName').value;
             const newEmail = document.getElementById('editEmail').value;
+            const newHashpassword = document.getElementById('editPassword').value;
 
             const data = new URLSearchParams();
             data.append('name', newName);
             data.append('email', newEmail);
+            data.append('passwordhash', newHashpassword);
 
             const response = await fetch(`http://localhost:8080/api/person/${id}`, {
                 method: 'PUT',
