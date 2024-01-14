@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ProjetCSGHK")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4852917f46b469f282d369c2577ad57e3243f503")]
 [assembly: System.Reflection.AssemblyProductAttribute("ProjetCSGHK")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ProjetCSGHK")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

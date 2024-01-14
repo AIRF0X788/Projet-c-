@@ -12,17 +12,18 @@ public class RequestHandler
 
         if (method == "GET" && path == "/")
         {
-            return "HTTP/1.1 200 OK\nContent-Type: text/html\n\n" + File.ReadAllText("index.html");
+            return "HTTP/1.1 200 OK\nContent-Type: text/html\n\n" + File.ReadAllText("bin/Debug/net7.0/index.html");
         }
 
         if (method == "GET" && path == "/user")
         {
-            return "HTTP/1.1 200 OK\nContent-Type: text/html\n\n" + File.ReadAllText("user.html");
+            return "HTTP/1.1 200 OK\nContent-Type: text/html\n\n" + File.ReadAllText("bin/Debug/net7.0/user.html");
         }
+        
 
         if (method == "GET" && path == "/product")
         {
-            return "HTTP/1.1 200 OK\nContent-Type: text/html\n\n" + File.ReadAllText("product.html");
+            return "HTTP/1.1 200 OK\nContent-Type: text/html\n\n" + File.ReadAllText("bin/Debug/net7.0/product.html");
         }
 
         else if (method == "POST" && path == "/api/inventory")
@@ -48,8 +49,11 @@ public class RequestHandler
                 var data = body.Split('&');
                 var name = data[0].Split('=')[1];
                 var email = data[1].Split('=')[1];
+                var password = Uri.UnescapeDataString(data[2].Split('=')[1]);
 
-                await DatabaseManager.UpdatePersonAsync(personId, name, email);
+                var passwordHash = DatabaseManager.HashPassword(password);
+
+                await DatabaseManager.UpdatePersonAsync(personId, name, email, passwordHash);
 
                 return "HTTP/1.1 200 OK\nContent-Type: text/plain\n\n[Confirmation de mise à jour]";
             }
@@ -124,8 +128,11 @@ public class RequestHandler
             var data = body.Split('&');
             var name = data[0].Split('=')[1];
             var email = data[1].Split('=')[1];
+            var password = Uri.UnescapeDataString(data[2].Split('=')[1]);
 
-            await DatabaseManager.AddPersonAsync(name, email);
+            var passwordHash = DatabaseManager.HashPassword(password);
+
+            await DatabaseManager.AddPersonAsync(name, email, passwordHash);
 
             return "HTTP/1.1 200 OK\nContent-Type: text/plain\n\n[Confirmation d'ajout]";
         }
@@ -145,11 +152,11 @@ public class RequestHandler
     {
         StringBuilder html = new StringBuilder();
         html.Append("<table border='1'>");
-        html.Append("<tr><th>ID</th><th>Name</th><th>Email</th></tr>");
+        html.Append("<tr><th>ID</th><th>Name</th><th>Email</th><th>Hashpassword</th></tr>");
 
         foreach (var person in people)
         {
-            html.Append($"<tr><td>{person.Id}</td><td>{person.Name}</td><td>{person.Email}</td></tr>");
+            html.Append($"<tr><td>{person.Id}</td><td>{person.Name}</td><td>{person.Email}</td><td>{person.PasswordHash}</td></tr>");
         }
 
         html.Append("</table>");

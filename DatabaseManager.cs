@@ -1,15 +1,17 @@
 using MySql.Data.MySqlClient;
-
+using BCrypt;
 public class Person
 {
     public int Id { get; set; }
     public string Name { get; set; }
     public string Email { get; set; }
+    public string PasswordHash { get; set; }
 
     public Person()
     {
         Name = string.Empty;
         Email = string.Empty;
+        PasswordHash = string.Empty;
     }
 }
 
@@ -42,7 +44,8 @@ public class DatabaseManager
                 CREATE TABLE IF NOT EXISTS data (
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     name VARCHAR(255) NOT NULL,
-                    email VARCHAR(255) NOT NULL
+                    email VARCHAR(255) NOT NULL,
+                    passwordhash VARCHAR(255) NOT NULL
                 )";
 
             string createProductTableQuery = @"
@@ -59,14 +62,13 @@ public class DatabaseManager
         }
     }
 
-    public static async Task AddPersonAsync(string name, string email)
+    public static async Task AddPersonAsync(string name, string email, string passwordhash)
     {
         using (MySqlConnection connection = new MySqlConnection(connectionString))
     {
         await connection.OpenAsync();
 
-        string insertPersonQuery = $"INSERT INTO data (name, email) VALUES ('{name}', '{email}')";
-
+        string insertPersonQuery = $"INSERT INTO data (name, email, passwordhash) VALUES ('{name}', '{email}', '{passwordhash}')";
         await ExecuteQueryAsync(connection, insertPersonQuery);
     }
     }
@@ -90,8 +92,9 @@ public class DatabaseManager
                         int id = Convert.ToInt32(reader["id"]);
                         string name = Convert.ToString(reader["name"]);
                         string email = Convert.ToString(reader["email"]);
+                        string passwordhash = Convert.ToString(reader["passwordhash"]);
 
-                        people.Add(new Person { Id = id, Name = name, Email = email });
+                        people.Add(new Person { Id = id, Name = name, Email = email, PasswordHash = passwordhash });
                     }
 
                     return people;
@@ -100,16 +103,20 @@ public class DatabaseManager
         }
     }
 
-public static async Task AddProductAsync(string name, string description, string price)
-{
-    using (MySqlConnection connection = new MySqlConnection(connectionString))
-    {
-        await connection.OpenAsync();
-        string insertProductQuery = $"INSERT INTO product (name, description, price) VALUES ('{name}', '{description}', '{price}')";
 
-        await ExecuteQueryAsync(connection, insertProductQuery);
+
+
+    public static async Task AddProductAsync(string name, string description, string price)
+    {
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
+
+        {
+            await connection.OpenAsync();
+            string insertProductQuery = $"INSERT INTO product (name, description, price) VALUES ('{name}', '{description}', '{price}')";
+
+            await ExecuteQueryAsync(connection, insertProductQuery);
+        }
     }
-}
 
     public static List<Product> GetProducts()
     {
@@ -141,59 +148,90 @@ public static async Task AddProductAsync(string name, string description, string
         return products;
     }
 
-public static async Task UpdatePersonAsync(int personId, string newName, string newEmail)
-{
-    using (MySqlConnection connection = new MySqlConnection(connectionString))
+    public static async Task UpdatePersonAsync(int personId, string newName, string newEmail, string newHashpassword)
     {
-        await connection.OpenAsync();
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
+        {
+            await connection.OpenAsync();
 
-        string updatePersonQuery = $"UPDATE data SET name = '{newName}', email = '{newEmail}' WHERE id = {personId}";
+            string updatePersonQuery = $"UPDATE data SET name = '{newName}', email = '{newEmail}',  passwordhash = '{newHashpassword}' WHERE id = {personId}";
 
-        await ExecuteQueryAsync(connection, updatePersonQuery);
+            await ExecuteQueryAsync(connection, updatePersonQuery);
+        }
     }
-}
 
-public static async Task DeletePersonAsync(int personId)
-{
-    using (MySqlConnection connection = new MySqlConnection(connectionString))
+    public static async Task DeletePersonAsync(int personId)
     {
-        await connection.OpenAsync();
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
+        {
+            await connection.OpenAsync();
 
-        string deletePersonQuery = $"DELETE FROM data WHERE id = {personId}";
+            string deletePersonQuery = $"DELETE FROM data WHERE id = {personId}";
 
-        await ExecuteQueryAsync(connection, deletePersonQuery);
+            await ExecuteQueryAsync(connection, deletePersonQuery);
+        }
     }
-}
 
-public static async Task UpdateProductAsync(int productId, string newName, string newDescription, string newPrice)
-{
-    using (MySqlConnection connection = new MySqlConnection(connectionString))
+    public static async Task UpdateProductAsync(int productId, string newName, string newDescription, string newPrice)
     {
-        await connection.OpenAsync();
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
+        {
+            await connection.OpenAsync();
 
-        string updateProductQuery = $"UPDATE product SET name = '{newName}', description = '{newDescription}', price = '{newPrice}' WHERE id = {productId}";
+            string updateProductQuery = $"UPDATE product SET name = '{newName}', description = '{newDescription}', price = '{newPrice}' WHERE id = {productId}";
 
-        await ExecuteQueryAsync(connection, updateProductQuery);
+            await ExecuteQueryAsync(connection, updateProductQuery);
+        }
     }
-}
 
-public static async Task DeleteProductAsync(int productId)
-{
-    using (MySqlConnection connection = new MySqlConnection(connectionString))
+    public static async Task DeleteProductAsync(int productId)
     {
-        await connection.OpenAsync();
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
+        {
+            await connection.OpenAsync();
 
-        string deleteProductQuery = $"DELETE FROM product WHERE id = {productId}";
+            string deleteProductQuery = $"DELETE FROM product WHERE id = {productId}";
 
-        await ExecuteQueryAsync(connection, deleteProductQuery);
+            await ExecuteQueryAsync(connection, deleteProductQuery);
+        }
     }
-}
+
+
+    public static string HashPassword(string hashpassword) {
+        return BCrypt.Net.BCrypt.HashPassword(hashpassword);
+    }
+
+    public static Person GetUserByUsername(string username)
+    {
+        using (var connection = new MySqlConnection(connectionString))
+        {
+            connection.Open();
+            var command = new MySqlCommand("SELECT * FROM data WHERE name = @name", connection);
+            command.Parameters.AddWithValue("@name", username);
+
+            using (var reader = command.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    return new Person
+                    {
+                        Id = Convert.ToInt32(reader["id"]),
+                        Name = reader["name"].ToString(),
+                        Email = reader["email"].ToString(),
+                        PasswordHash = reader["passwordhash"].ToString()
+                    };
+                }
+            }
+        }
+        return null;
+    }
+
 
     private static async Task ExecuteQueryAsync(MySqlConnection connection, string query)
-{
-    using (MySqlCommand command = new MySqlCommand(query, connection))
     {
-        await command.ExecuteNonQueryAsync();
+        using (MySqlCommand command = new MySqlCommand(query, connection))
+        {
+            await command.ExecuteNonQueryAsync();
+        }
     }
-}
 }
