@@ -104,7 +104,7 @@ else if (method == "DELETE" && path.StartsWith("/api/person/"))
             return $"HTTP/1.1 200 OK\nContent-Type: text/html\n\n{html}";
         }
 
-<<<<<<< HEAD
+
         else if (method == "GET" && path.StartsWith("/edit-person"))
         {
             var idString = path.Substring(path.IndexOf('=') + 1);
@@ -127,11 +127,6 @@ else if (method == "DELETE" && path.StartsWith("/api/person/"))
 
             return "HTTP/1.1 302 Found\nLocation: /people"; // Redirigez vers la liste des personnes après la mise à jour
         }
-
-
-
-=======
->>>>>>> 2893d2b5ef441e14d6baa93d8dfc840a89282a08
         return "HTTP/1.1 404 Not Found\nContent-Type: text/plain\n\nNot Found";
     }
 

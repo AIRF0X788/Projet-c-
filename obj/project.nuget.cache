@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "OXVyGia+LeIAwhERe1adUJ6xtfwfv6+R/MYCtydQbDomapbY7KrPeGwtrMl/QHrMQ/9TIweCLvhAINCT1wGUcg==",
+  "dgSpecHash": "8SU4KdQOQsorQsD3a6qZ6nlVfXykr0mn/Hm9faihv+aNMBWUboTbK51pIZY+C+uPbpxiAr9vWbsE/xSYJQCFiA==",
   "success": true,
-  "projectFilePath": "c:\\Users\\hugoe\\CSharp\\Projetc#\\Projet-c-\\ProjetCSGHK.csproj",
+  "projectFilePath": "C:\\Users\\hugoe\\CSharp\\Projetc#\\Projet-c-\\ProjetCSGHK.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\hugoe\\.nuget\\packages\\bouncycastle.cryptography\\2.2.1\\bouncycastle.cryptography.2.2.1.nupkg.sha512",
     "C:\\Users\\hugoe\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
@@ -55,12 +55,6 @@
     "C:\\Users\\hugoe\\.nuget\\packages\\zstdsharp.port\\0.7.1\\zstdsharp.port.0.7.1.nupkg.sha512"
   ],
   "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problème de lecture du fichier cache c:\\Users\\hugoe\\CSharp\\Projetc#\\Projet-c-\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    },
     {
       "code": "NU1701",
       "level": "Warning",

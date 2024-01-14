@@ -2631,11 +2631,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\hugoe\\CSharp\\Projetc#\\Projet-c-\\ProjetCSGHK.csproj",
+      "projectUniqueName": "C:\\Users\\hugoe\\CSharp\\Projetc#\\Projet-c-\\ProjetCSGHK.csproj",
       "projectName": "ProjetCSGHK",
-      "projectPath": "c:\\Users\\hugoe\\CSharp\\Projetc#\\Projet-c-\\ProjetCSGHK.csproj",
+      "projectPath": "C:\\Users\\hugoe\\CSharp\\Projetc#\\Projet-c-\\ProjetCSGHK.csproj",
       "packagesPath": "C:\\Users\\hugoe\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\hugoe\\CSharp\\Projetc#\\Projet-c-\\obj\\",
+      "outputPath": "C:\\Users\\hugoe\\CSharp\\Projetc#\\Projet-c-\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\hugoe\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -2704,12 +2704,6 @@
     }
   },
   "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problème de lecture du fichier cache c:\\Users\\hugoe\\CSharp\\Projetc#\\Projet-c-\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    },
     {
       "code": "NU1701",
       "level": "Warning",

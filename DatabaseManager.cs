@@ -100,38 +100,13 @@ public class DatabaseManager
         }
     }
 
-<<<<<<< HEAD
-    public static Person GetPersonById(int id)
-    {
-        Person person = null;
-        using (var connection = new SQLiteConnection("Data Source=db.db;Version=3;"))
-        {
-                connection.Open();
-                var command = new SQLiteCommand("SELECT * FROM data WHERE id = @Id", connection);
-                command.Parameters.AddWithValue("@Id", id);
-                using (var reader = command.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        person = new Person
-                        {
-                            Id = Convert.ToInt32(reader["id"]),
-                        Name = reader["name"].ToString(),
-                        Email = reader["email"].ToString()
-                    };
-                }
-            }
-        }
-        return person;
-    }
 
 
-    public static void AddProduct(string name, string description, string price)
-=======
+
 public static async Task AddProductAsync(string name, string description, string price)
 {
     using (MySqlConnection connection = new MySqlConnection(connectionString))
->>>>>>> 2893d2b5ef441e14d6baa93d8dfc840a89282a08
+
     {
         await connection.OpenAsync();
         string insertProductQuery = $"INSERT INTO product (name, description, price) VALUES ('{name}', '{description}', '{price}')";
