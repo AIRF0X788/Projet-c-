@@ -174,8 +174,6 @@ public static void AddPerson(string name, string email)
                         string name = Convert.ToString(reader["name"]);
                         string email = Convert.ToString(reader["email"]);
 
-
-
                         people.Add(new Person { Id = id, Name = name, Email = email });
 
                     }
@@ -185,6 +183,31 @@ public static void AddPerson(string name, string email)
             }
         }
     }
+
+    public static Person GetPersonById(int id)
+    {
+        Person person = null;
+        using (var connection = new SQLiteConnection("Data Source=db.db;Version=3;"))
+        {
+                connection.Open();
+                var command = new SQLiteCommand("SELECT * FROM data WHERE id = @Id", connection);
+                command.Parameters.AddWithValue("@Id", id);
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        person = new Person
+                        {
+                            Id = Convert.ToInt32(reader["id"]),
+                        Name = reader["name"].ToString(),
+                        Email = reader["email"].ToString()
+                    };
+                }
+            }
+        }
+        return person;
+    }
+
 
     public static void AddProduct(string name, string description, string price)
     {

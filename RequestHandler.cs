@@ -15,6 +15,17 @@ public class RequestHandler
             return "HTTP/1.1 200 OK\nContent-Type: text/html\n\n" + File.ReadAllText("index.html");
         }
 
+        if (method == "GET" && path == "/user")
+        {
+            return "HTTP/1.1 200 OK\nContent-Type: text/html\n\n" + File.ReadAllText("user.html");
+        }
+
+        if (method == "GET" && path == "/product")
+        {
+            return "HTTP/1.1 200 OK\nContent-Type: text/html\n\n" + File.ReadAllText("product.html");
+        }
+        
+
         else if (method == "POST" && path == "/api/inventory")
         {
             var body = lines[lines.Length - 1]; 
@@ -55,7 +66,30 @@ public class RequestHandler
             return $"HTTP/1.1 200 OK\nContent-Type: text/html\n\n{html}";
         }
 
-        
+        else if (method == "GET" && path.StartsWith("/edit-person"))
+        {
+            var idString = path.Substring(path.IndexOf('=') + 1);
+            var id = int.Parse(idString);
+            var person = DatabaseManager.GetPeopleByID(id); // Assurez-vous que cette méthode existe et fonctionne
+            var editFormHtml = GenerateEditForm(person);
+
+            return "HTTP/1.1 200 OK\nContent-Type: text/html\n\n" + editFormHtml;
+        }
+
+        else if (method == "POST" && path == "/update-person")
+        {
+            var body = lines[lines.Length - 1]; 
+            var data = body.Split('&');
+            var id = int.Parse(data[0].Split('=')[1]);
+            var name = Uri.UnescapeDataString(data[1].Split('=')[1]);
+            var email = Uri.UnescapeDataString(data[2].Split('=')[1]);
+
+            DatabaseManager.UpdatePerson(id, name, email); // Assurez-vous que cette méthode existe et fonctionne
+
+            return "HTTP/1.1 302 Found\nLocation: /people"; // Redirigez vers la liste des personnes après la mise à jour
+        }
+
+
 
         return "HTTP/1.1 404 Not Found\nContent-Type: text/plain\n\nNot Found";
     }
@@ -68,13 +102,17 @@ public class RequestHandler
 
         foreach (var person in people)
         {
-            html.Append($"<tr><td>{person.Id}</td><td>{person.Name}</td><td>{person.Email}</td></tr>");
+            html.Append($"<tr><td>{person.Id}</td><td>{person.Name}</td><td>{person.Email}</td><td><a href='/edit-person?id={person.Id}'>Edit</a></td></tr>");
+
         }
 
         html.Append("</table>");
 
         return html.ToString();
     }
+
+    
+
 
     private static string GenerateHtmlTable2(List<Product> products)
     {
@@ -84,7 +122,7 @@ public class RequestHandler
 
         foreach (var product in products)
         {
-            html.Append($"<tr><td>{product.Id}</td><td>{product.Name}</td><td>{product.Description}</td><td>{product.Price}</td></tr>");
+            html.Append($"<tr><td>{product.Id}</td><td>{product.Name}</td><td>{product.Description}</td><td>{product.Price}</td><td><button onclick='editPerson({product.Id})'>Edit</button></td></tr>");
         }
 
         html.Append("</table>");

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product</title>
+</head>
+<body>
+    <h1>Ajouter un produit</h1>
+    <form id="addProductForm">
+        <label for="pname">Nom:</label>
+        <input type="text" id="pname" name="pname" required>
+        <br>
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description" required>
+        <br>
+        <label for="price">Prix:</label>
+        <input type="text" id="price" name="price" required>
+        <br>
+        <button type="submit">Ajouter</button>
+    </form>
+
+    <script>
+        document.getElementById('addProductForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            addProduct();
+        });
+
+        async function addProduct() {
+            const name = document.getElementById('pname').value;
+            const description = document.getElementById('description').value;
+            const price = document.getElementById('price').value;
+
+            const data = new URLSearchParams();
+            data.append('pname', name);
+            data.append('description', description);
+            data.append('price', price);
+
+            const response = await fetch('http://localhost:8080/api/inventory', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: data,
+            });
+
+            const result = await response.json();
+            console.log(result);
+        }
+    </script>
+
+    <a href="http://localhost:8080/inventory">Afficher la table des produits</a>
+
+</body>
+</html>
+
