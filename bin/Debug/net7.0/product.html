@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product</title>
 </head>
+
 <body>
     <h1>Ajouter un produit</h1>
     <form id="addProductForm">
@@ -49,7 +51,70 @@
         }
     </script>
 
+    <h1>Éditer un produit</h1>
+    
+    <form id="editProductForm">
+        <label for="editProductId">ID du produit à éditer:</label>
+        <input type="number" id="editProductId" name="editProductId" required>
+        <br>
+        <label for="editProductName">Nouveau nom:</label>
+        <input type="text" id="editProductName" name="editProductName">
+        <br>
+        <label for="editProductDescription">Nouvelle description:</label>
+        <input type="text" id="editProductDescription" name="editProductDescription">
+        <br>
+        <label for="editProductPrice">Nouveau prix:</label>
+        <input type="text" id="editProductPrice" name="editProductPrice">
+        <br>
+        <button type="button" onclick="editProduct()">Éditer</button>
+    </form>
+
+    <script>
+        async function editProduct() {
+            const idToEdit = document.getElementById('editProductId').value;
+            const newName = document.getElementById('editProductName').value;
+            const newDescription = document.getElementById('editProductDescription').value;
+            const newPrice = document.getElementById('editProductPrice').value;
+
+            const data = new URLSearchParams();
+            data.append('name', newName);
+            data.append('description', newDescription);
+            data.append('price', newPrice);
+
+            const response = await fetch(`http://localhost:8080/api/product/${idToEdit}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: data,
+            });
+
+            const result = await response.json();
+            console.log(result);
+        }
+    </script>
+
+    <label for="deleteProductId">ID du produit à supprimer:</label>
+    <input type="number" id="deleteProductId" name="deleteProductId" required>
+    <br>
+    <button type="button" onclick="deleteProduct()">Supprimer</button>
+
+    <script>
+        async function deleteProduct() {
+            const idToDelete = document.getElementById('deleteProductId').value;
+
+            const response = await fetch(`http://localhost:8080/api/product/${idToDelete}`, {
+                method: 'DELETE',
+            });
+
+            const result = await response.json();
+            console.log(result);
+        }
+    </script>
+
+
     <a href="http://localhost:8080/inventory">Afficher la table des produits</a>
 
 </body>
+
 </html>

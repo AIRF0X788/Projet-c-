@@ -34,48 +34,82 @@ public class RequestHandler
             var price = product[2].Split('=')[1];
 
 
-           await DatabaseManager.AddProductAsync(name, description, price);
+            await DatabaseManager.AddProductAsync(name, description, price);
 
             return "HTTP/1.1 200 OK\nContent-Type: text/plain\n\n[Confirmation d'ajout]";
         }
 
 
         else if (method == "PUT" && path.StartsWith("/api/person/"))
-{
-    int personId;
-    if (int.TryParse(path.Split('/').Last(), out personId))
-    {
-        var body = lines[lines.Length - 1];
-        var data = body.Split('&');
-        var name = data[0].Split('=')[1];
-        var email = data[1].Split('=')[1];
+        {
+            int personId;
+            if (int.TryParse(path.Split('/').Last(), out personId))
+            {
+                var body = lines[lines.Length - 1];
+                var data = body.Split('&');
+                var name = data[0].Split('=')[1];
+                var email = data[1].Split('=')[1];
 
-        await DatabaseManager.UpdatePersonAsync(personId, name, email);
+                await DatabaseManager.UpdatePersonAsync(personId, name, email);
 
-        return "HTTP/1.1 200 OK\nContent-Type: text/plain\n\n[Confirmation de mise à jour]";
-    }
-    else
-    {
-        return "HTTP/1.1 400 Bad Request\nContent-Type: text/plain\n\n[Erreur de requête]";
-    }
-}
+                return "HTTP/1.1 200 OK\nContent-Type: text/plain\n\n[Confirmation de mise à jour]";
+            }
+            else
+            {
+                return "HTTP/1.1 400 Bad Request\nContent-Type: text/plain\n\n[Erreur de requête]";
+            }
+        }
 
-else if (method == "DELETE" && path.StartsWith("/api/person/"))
-{
-    int personId;
-    if (int.TryParse(path.Split('/').Last(), out personId))
-    {
-        await DatabaseManager.DeletePersonAsync(personId);
+        else if (method == "DELETE" && path.StartsWith("/api/person/"))
+        {
+            int personId;
+            if (int.TryParse(path.Split('/').Last(), out personId))
+            {
+                await DatabaseManager.DeletePersonAsync(personId);
 
-        return "HTTP/1.1 200 OK\nContent-Type: text/plain\n\n[Confirmation de suppression]";
-    }
-    else
-    {
-        return "HTTP/1.1 400 Bad Request\nContent-Type: text/plain\n\n[Erreur de requête]";
-    }
-}
+                return "HTTP/1.1 200 OK\nContent-Type: text/plain\n\n[Confirmation de suppression]";
+            }
+            else
+            {
+                return "HTTP/1.1 400 Bad Request\nContent-Type: text/plain\n\n[Erreur de requête]";
+            }
+        }
 
+        else if (method == "PUT" && path.StartsWith("/api/product/"))
+        {
+            int productId;
+            if (int.TryParse(path.Split('/').Last(), out productId))
+            {
+                var body = lines[lines.Length - 1];
+                var data = body.Split('&');
+                var newName = data[0].Split('=')[1];
+                var newDescription = data[1].Split('=')[1];
+                var newPrice = data[2].Split('=')[1];
 
+                await DatabaseManager.UpdateProductAsync(productId, newName, newDescription, newPrice);
+
+                return "HTTP/1.1 200 OK\nContent-Type: text/plain\n\n[Confirmation de mise à jour du produit]";
+            }
+            else
+            {
+                return "HTTP/1.1 400 Bad Request\nContent-Type: text/plain\n\n[Erreur de requête]";
+            }
+        }
+
+        else if (method == "DELETE" && path.StartsWith("/api/product/"))
+        {
+            int productId;
+            if (int.TryParse(path.Split('/').Last(), out productId))
+            {
+                await DatabaseManager.DeleteProductAsync(productId);
+
+                return "HTTP/1.1 200 OK\nContent-Type: text/plain\n\n[Confirmation de suppression du produit]";
+            }
+            else
+            {
+                return "HTTP/1.1 400 Bad Request\nContent-Type: text/plain\n\n[Erreur de requête]";
+            }
+        }
 
         if (method == "GET" && path == "/inventory")
         {

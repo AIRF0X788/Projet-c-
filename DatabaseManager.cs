@@ -166,6 +166,32 @@ public static async Task DeletePersonAsync(int personId)
     }
 }
 
+public static async Task UpdateProductAsync(int productId, string newName, string newDescription, string newPrice)
+{
+    using (MySqlConnection connection = new MySqlConnection(connectionString))
+    {
+        await connection.OpenAsync();
+
+        string updateProductQuery = $"UPDATE product SET name = '{newName}', description = '{newDescription}', price = '{newPrice}' WHERE id = {productId}";
+
+        await ExecuteQueryAsync(connection, updateProductQuery);
+    }
+}
+
+public static async Task DeleteProductAsync(int productId)
+{
+    using (MySqlConnection connection = new MySqlConnection(connectionString))
+    {
+        await connection.OpenAsync();
+
+        string deleteProductQuery = $"DELETE FROM product WHERE id = {productId}";
+
+        await ExecuteQueryAsync(connection, deleteProductQuery);
+    }
+}
+
+
+
 
     private static async Task ExecuteQueryAsync(MySqlConnection connection, string query)
 {
