@@ -2,9 +2,6 @@
 {
     static void Main(string[] args)
     {
-        Server.Start();
-        
+        Server.StartAsync().Wait();
     }
-
-    
 }

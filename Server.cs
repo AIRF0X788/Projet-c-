@@ -5,9 +5,9 @@ using System.Diagnostics;
 
 public class Server
 {
-    public static void Start()
+    public static async Task StartAsync()
     {
-        DatabaseManager.CreateDatabase();
+        await DatabaseManager.CreateDatabaseAsync();
         Console.WriteLine("Database created successfully!");
         TcpListener listener = new TcpListener(IPAddress.Any, 8080);
         listener.Start();
@@ -15,16 +15,16 @@ public class Server
 
         while (true)
         {
-            using (var client = listener.AcceptTcpClient())
+            using (var client = await listener.AcceptTcpClientAsync())
             using (var stream = client.GetStream())
             {
                 byte[] buffer = new byte[1024];
-                int bytesRead = stream.Read(buffer, 0, buffer.Length);
+                int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
                 string request = Encoding.UTF8.GetString(buffer, 0, bytesRead);
 
-                string response = RequestHandler.ProcessRequest(request);
+                string response = await RequestHandler.ProcessRequest(request);
                 byte[] responseBytes = Encoding.UTF8.GetBytes(response);
-                stream.Write(responseBytes, 0, responseBytes.Length);
+                await stream.WriteAsync(responseBytes, 0, responseBytes.Length);
 
                 if (response.Contains("HTTP/1.1 200 OK\nContent-Type: text/plain\n\n[Racine]"))
                 {
@@ -43,21 +43,22 @@ public class Server
                         Console.WriteLine($"Erreur : {ex.Message}");
                     }
 
-                    OuvrirPageHtml(cheminFichierHtml);
+                    await OuvrirPageHtmlAsync(cheminFichierHtml);
                 }
             }
         }
     }
 
-    private static void OuvrirPageHtml(string cheminFichierHtml)
+   private static async Task OuvrirPageHtmlAsync(string cheminFichierHtml)
+{
+    try
     {
-        try
-        {
-            Process.Start(cheminFichierHtml);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Erreur : {ex.Message}");
-        }
+        Process.Start(cheminFichierHtml);
     }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Erreur : {ex.Message}");
+    }
+}
+
 }

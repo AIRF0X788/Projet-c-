@@ -2,7 +2,7 @@ using System.Text;
 
 public class RequestHandler
 {
-    public static string ProcessRequest(string request)
+    public static async Task<string> ProcessRequest(string request)
     {
         var lines = request.Split(new string[] { "\r\n" }, StringSplitOptions.None);
         var requestLine = lines.Length > 0 ? lines[0] : string.Empty;
@@ -28,17 +28,55 @@ public class RequestHandler
 
         else if (method == "POST" && path == "/api/inventory")
         {
-            var body = lines[lines.Length - 1]; 
+            var body = lines[lines.Length - 1];
             var product = body.Split('&');
             var name = product[0].Split('=')[1];
             var description = product[1].Split('=')[1];
             var price = product[2].Split('=')[1];
 
 
-            DatabaseManager.AddProduct(name, description, price);
+           await DatabaseManager.AddProductAsync(name, description, price);
 
             return "HTTP/1.1 200 OK\nContent-Type: text/plain\n\n[Confirmation d'ajout]";
         }
+
+
+        else if (method == "PUT" && path.StartsWith("/api/person/"))
+{
+    int personId;
+    if (int.TryParse(path.Split('/').Last(), out personId))
+    {
+        var body = lines[lines.Length - 1];
+        var data = body.Split('&');
+        var name = data[0].Split('=')[1];
+        var email = data[1].Split('=')[1];
+
+        await DatabaseManager.UpdatePersonAsync(personId, name, email);
+
+        return "HTTP/1.1 200 OK\nContent-Type: text/plain\n\n[Confirmation de mise à jour]";
+    }
+    else
+    {
+        return "HTTP/1.1 400 Bad Request\nContent-Type: text/plain\n\n[Erreur de requête]";
+    }
+}
+
+else if (method == "DELETE" && path.StartsWith("/api/person/"))
+{
+    int personId;
+    if (int.TryParse(path.Split('/').Last(), out personId))
+    {
+        await DatabaseManager.DeletePersonAsync(personId);
+
+        return "HTTP/1.1 200 OK\nContent-Type: text/plain\n\n[Confirmation de suppression]";
+    }
+    else
+    {
+        return "HTTP/1.1 400 Bad Request\nContent-Type: text/plain\n\n[Erreur de requête]";
+    }
+}
+
+
 
         if (method == "GET" && path == "/inventory")
         {
@@ -49,12 +87,12 @@ public class RequestHandler
         }
         else if (method == "POST" && path == "/api/person")
         {
-            var body = lines[lines.Length - 1]; 
+            var body = lines[lines.Length - 1];
             var data = body.Split('&');
             var name = data[0].Split('=')[1];
             var email = data[1].Split('=')[1];
 
-            DatabaseManager.AddPerson(name, email);
+            await DatabaseManager.AddPersonAsync(name, email);
 
             return "HTTP/1.1 200 OK\nContent-Type: text/plain\n\n[Confirmation d'ajout]";
         }
@@ -66,6 +104,7 @@ public class RequestHandler
             return $"HTTP/1.1 200 OK\nContent-Type: text/html\n\n{html}";
         }
 
+<<<<<<< HEAD
         else if (method == "GET" && path.StartsWith("/edit-person"))
         {
             var idString = path.Substring(path.IndexOf('=') + 1);
@@ -91,6 +130,8 @@ public class RequestHandler
 
 
 
+=======
+>>>>>>> 2893d2b5ef441e14d6baa93d8dfc840a89282a08
         return "HTTP/1.1 404 Not Found\nContent-Type: text/plain\n\nNot Found";
     }
 
