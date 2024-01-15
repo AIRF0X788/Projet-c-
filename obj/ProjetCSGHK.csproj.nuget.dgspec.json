@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projet c#\\ProjetCSGHK.csproj": {}
+    "C:\\Users\\hugoe\\CSharp\\Projetc#\\ProjetCSGHK.csproj": {}
   },
   "projects": {
-    "D:\\Projet c#\\ProjetCSGHK.csproj": {
+    "C:\\Users\\hugoe\\CSharp\\Projetc#\\ProjetCSGHK.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projet c#\\ProjetCSGHK.csproj",
+        "projectUniqueName": "C:\\Users\\hugoe\\CSharp\\Projetc#\\ProjetCSGHK.csproj",
         "projectName": "ProjetCSGHK",
-        "projectPath": "D:\\Projet c#\\ProjetCSGHK.csproj",
-        "packagesPath": "C:\\Users\\gui2l\\.nuget\\packages\\",
-        "outputPath": "D:\\Projet c#\\obj\\",
+        "projectPath": "C:\\Users\\hugoe\\CSharp\\Projetc#\\ProjetCSGHK.csproj",
+        "packagesPath": "C:\\Users\\hugoe\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\hugoe\\CSharp\\Projetc#\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\gui2l\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\hugoe\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -78,30 +78,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[7.0.14, 7.0.14]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[7.0.14, 7.0.14]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[7.0.14, 7.0.14]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[7.0.14, 7.0.14]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }
