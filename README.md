@@ -2,15 +2,20 @@
 
 Ce projet vise à développer une API en C# déployée sur une VM sous Debian pour gérer les opérations CRUD relatives aux utilisateurs et aux produits.L'API interagit avec une base de données MySQL et est conçue pour être déployée sur un serveur Apache Linux.
 
-**Table des Matières**
+**Sommaires**
 Introduction
 Trello
+Setup des serveurs
 Aperçu de la Structure du Projet
 Utilisation
 À propos
 
 **Trello**
 Lien : https://trello.com/b/30iBVzT6/projet-csharp
+
+**Setup des serveurs**
+
+Voir le pdf qui est dans le dossier "setup serveurs"
 
 **Aperçu de la Structure du Projet**
 ***• DatabaseManager.cs***
