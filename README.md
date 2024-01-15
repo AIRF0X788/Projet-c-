@@ -15,7 +15,7 @@ Lien : https://trello.com/b/30iBVzT6/projet-csharp
 
 **Setup des serveurs**
 
-Voir le pdf qui est dans le dossier "setup serveurs"
+Voir le pdf "Docu-setup-serveurs.pdf"
 
 **Aperçu de la Structure du Projet**
 ***• DatabaseManager.cs***
